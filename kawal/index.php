@@ -1,6 +1,6 @@
 <?php include '../sesi.php'; include '../db_buka.php';?>
 <html>
-<head><title><?=$Tajuk_Muka_Surat?> [<?=$_GET['p'];?>]</title>
+<head><title><?=$Tajuk_Muka_Surat?> [<?=( !isset($_GET['p']) ? '':$_GET['p'] )?>]</title>
 <script type="text/javascript" src="../../../js/filter/jquery-1.4.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../../../js/filter/susun.style.css" />
 <script type="text/javascript" src="../../../js/filter/susun.application.js"></script>
