@@ -7,6 +7,9 @@ echo "\r"; ?><html><head><title><?=$Tajuk_Muka_Surat?></title>
 $kotak[0]='login_fancybox.txt'; 
 $kotak[1]='login_colorbox.txt'; 
 include ($kotak[rand(0,1)]);
+// setkan nilai $isi dan $isi2
+$isi = null;
+$isi2 = null;
 ?>
 </head>
 <body background="../../bg/bg/<?php include 'gambar.php';?>">
