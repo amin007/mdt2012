@@ -131,8 +131,8 @@ function paparan($result,$fields,$rows,$myTable,$bil)
 	{// mula papar 
 			$link1=')<a target="_blank" href="kawal_';
 			$link2=')<a target="_blank" href="link_';
-			$level=$_SESSION['level'];
-			$p=$_GET['p'];
+			$level=( !isset($_SESSION['level']) )? '':$_SESSION['level'];
+			$p=( !isset($_GET['p']) )? '':$_GET['p'];
 	
 		$nom="\n<td>" . $bil++;
 		$nom.=($level=='kawal')?
@@ -160,7 +160,8 @@ function paparan($result,$fields,$rows,$myTable,$bil)
 }// function paparan() - tamat
 	function halaman($mula,$tamat,$page,$bil_semua,$muka_surat,$myTable,$baris_max)
 {// function halaman() - mula
-	$senarai_medan="jadual=$myTable&p=".$_GET['p']."&item=$baris_max";
+	$p=( !isset($_GET['p']) )? '':$_GET['p'];
+	$senarai_medan="jadual=$myTable&p=$p&item=$baris_max";
 	echo "\n<div align=left>$mula\nJadual : $myTable | " .
 		"Bil Kes : ($bil_semua) Papar halaman "; 
 	if($page > 1) // Bina halaman sebelum
