@@ -10,12 +10,13 @@ $_SESSION[status] = $medan[status];
 */
 date_default_timezone_set('Asia/Kuala_Lumpur');
 session_start();
-$nama_anda= $_SESSION['user'];
-$pass_anda= $_SESSION['pass'];
-$level_anda= $_SESSION['level'];
-$sql = $_SESSION['sql'];
-$rekod = $_SESSION['rekod'];
-$jumlah = $_SESSION['jumlah'];
+	$nama_anda = (isset($_SESSION['user']) ) ? $_SESSION['user'] : null;
+	$pass_anda = (isset($_SESSION['pass']) ) ? $_SESSION['pass'] : null;
+	$level_anda = (isset($_SESSION['level']) ) ? $_SESSION['level'] : null;
+	$sql =(isset($_SESSION['sql']) ) ? $_SESSION['sql'] : null;
+	$rekod = (isset($_SESSION['rekod']) ) ? $_SESSION['rekod'] : null;
+	$jumlah = (isset($_SESSION['jumlah']) ) ? $_SESSION['jumlah'] : null;
+
 
 if($_SESSION['user']==null): header('Location:../logout.php'); endif; 
 $masaGunaSistem = 28800; // 1 jam = 3600 = 60 saat X 60 minit
