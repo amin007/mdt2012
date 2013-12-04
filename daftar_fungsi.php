@@ -44,9 +44,9 @@ function jadual_bulanan()
     $s.'mei'.$t, $s.'jun'.$t, $s.'jul'.$t, $s.'ogo'.$t, 
     $s.'sep'.$t, $s.'okt'.$t, $s.'nov'.$t, $s.'dis'.$t);
 
-	$p=($_GET['p']==null)? '':'&p='.$_GET['p'];
-	$fe=($_GET['fe']==null)? '':'&fe='.$_GET['fe'];
-	$item=($_GET['item']==null)? '&item=30':'&item='.$_GET['item'];
+	$p=( !isset($_GET['p']) || $_GET['p']==null)? '':'&p='.$_GET['p'];
+	$fe=( !isset($_GET['fe']) || $_GET['fe']==null)? '':'&fe='.$_GET['fe'];
+	$item=( !isset($_GET['item']) || $_GET['item']==null)? '&item=30':'&item='.$_GET['item'];
 	$jadual='<ul class="tabset_tabs">';
 	
 	foreach ($bulan as $key => $nama_bulan)
