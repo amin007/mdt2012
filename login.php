@@ -5,7 +5,7 @@ width="100%" height="100%">
 $ip  =$_SERVER['REMOTE_ADDR'];
 $ip2 =substr($ip,0,10);
 $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-$hostname2 = $_SERVER['REMOTE_HOST'];
+$hostname2 = null; //$_SERVER['REMOTE_HOST'];
 $server = $_SERVER['SERVER_NAME'];
 
 echo "<br>Alamat IP : <font color='red'>".$ip."</font> |".
