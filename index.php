@@ -4,6 +4,7 @@ if (isset($_SESSION['user']) &&  isset($_SESSION['level']))
 {
 	$nama_anda=$_SESSION['user'];
 	$level=$_SESSION['level'];
+}
 else
 {
 	$nama_anda=null;
