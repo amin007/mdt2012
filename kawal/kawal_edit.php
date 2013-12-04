@@ -240,7 +240,7 @@ foreach ($myJadual as $key => $myTable)
 		//$bil=1;while($row = mysql_fetch_array($result,MYSQL_NUM))
 		$bil=1;while($row = mysql_fetch_array($result))
 		{// mula papar 
-			paparisi($myTable,$row,$result,$fields,$rows,$bil);
+			paparisi($myTable,$row,$result,$fields,$baris,$bil);
 			$bil++;$noID=$row['newss'];
 			if ($myTable=='mdt_rangka') 
 			{
@@ -277,7 +277,7 @@ foreach ($myJadual as $key => $myTable)
 //style="position: relative; top: -12px; left: 80px;" ?>
 </fieldset>
 <div align="center"><form method="GET" action="">
-<font size="5" color="red"><?=$_GET['ralat']?>&rarr;</font><br>
+<font size="5" color="red"><?=( !isset($_GET['ralat']) ? '':$_GET['ralat'] )?>&rarr;</font><br>
 <input type="text" name="cari" size="40" value="<?=$carian;?>" 
 id="inputString" onkeyup="lookup(this.value);" onblur="fill();">
 <input type="submit" value="mencari">
