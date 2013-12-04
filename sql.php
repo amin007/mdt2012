@@ -13,7 +13,9 @@ $bulan = array('rangka',
 'sep', 'okt', 'nov', 'dis');
 //unset($bulan[0]);
 ##############################################	
-switch ($_REQUEST['p']) 
+$p=( !isset($_REQUEST['p']) || $_GET['p']==null)? null : $_REQUEST['p'];
+$fe=( !isset($_REQUEST['fe']) || $_GET['fe']==null)? null : $_REQUEST['fe'];
+switch ($p) 
 {// mula - semak $_REQUEST['p']
 case "SemakUtama":
 	////////////////////////////////////////////////////////
@@ -661,8 +663,8 @@ default:
 		$sql  = 'SELECT ' . $r. ' FROM mdt_' . $myTable . ' b, mdt_rangka as c ';
 		$sql .= 'WHERE b.newss=c.newss ';
 		$sql .= 'and c.fe<>"batal" ';
-		$sql .= $_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-		:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+		$sql .= $_SESSION['level']=='fe' ? "and c.fe='" . $_SESSION['user'] . "' "
+			:(($fe==null) ? '': "and c.fe='$fe' ");
 		$sql .= "\rORDER BY b.nama";
 	}
 ##################################################################################################
