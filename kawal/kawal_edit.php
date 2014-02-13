@@ -73,7 +73,7 @@ if (!isset($_POST['semua'])) { ?><?php
 		$bil=1;
 		while($row = mysql_fetch_array($result,MYSQL_NUM))
 		{
-			paparisi2($myTable,$row,$result,$fields,$rows,$bil);
+			paparisi2($jadual,$row,$result,$fields,$rows,$bil);
 			$bil++;
 		}
 
@@ -147,11 +147,11 @@ $bulanan = array('jan', 'feb', 'mac', 'apr',
 	'mei', 'jun', 'jul', 'ogo', 
 	'sep', 'okt', 'nov', 'dis'); 
 $semakBulan = $bulanan[$semakBln-1];
-$caripapar = //$semakBln . $semakBulan . 
-'=' . $_GET['cari'];
+$caripapar = //$semakBln . $semakBulan . '=' . 
+$_GET['cari'];
 ?>
 <html>
-<head><title>Kes MDT 2012:<?=$carian?></title>
+<head><title>Kes MDT 2012:<?=$caripapar?></title>
 <script type="text/javascript" src="../../../js/datepick/jquery.js"></script>
 <!-- pilih tarikh - mula -->
 <link rel="stylesheet" href="../../../js/datepick/datepick.css" type="text/css" />
@@ -172,7 +172,7 @@ include '../excel.txt';
 include '../autocomplete.txt';
 ?>
 </head>
-<body background="../../../bg/bg/<?php include '../gambar2.php';?>">
+<body background="../../../bg/bg/<?php //include '../gambar2.php';?>">
 <div id="content">
 <fieldset><legend>
 <span style="background-color: black; color:yellow">
@@ -235,27 +235,28 @@ foreach ($myJadual as $key => $myTable)
 
 	elseif($baris=='1'): // kalau jumpa
 		echo '<table border=0 class="excel" bgcolor="#ffffff">';
+		echo '<caption>Jumpa Sebaris</caption>';
 		papartajuk($fields,$result,$myTable);
 		
 		//$bil=1;while($row = mysql_fetch_array($result,MYSQL_NUM))
 		$bil=1;while($row = mysql_fetch_array($result))
 		{// mula papar 
 			paparisi($myTable,$row,$result,$fields,$baris,$bil);
-			$bil++;$noID=$row['newss'];
-			if ($myTable=='mdt_rangka') 
-			{
-				$kawan=$row['fe'];
-				$telkawan=$row['nohpfe'];
-				$survey=$row['sv'];
-			}
-			elseif ($myTable==$blnlepas) 
+			$bil++;
+				$noID=$row['newss'];
+				$kawan=(!isset ($row['fe'])) ? null : $row['fe'];
+				$telkawan=(!isset ($row['nohpfe'])) ? null : $row['nohpfe'];
+				$survey=(!isset ($row['sv'])) ? null : $row['sv'];
+				//echo '$blnlepas=' . $blnlepas;
+			/*
+			if ($myTable==$blnlepas) 
 			{
 				for ( $c = 1 ; $c < $fields ; $c++ )
 				{
 					$namamedan=mysql_field_name($result,$c);
 					$lepas[$namamedan]=$row[$namamedan];
 				}
-			}
+			}*/
 		}// tutup papar
 		echo "\n</table>\n";
 	else : 
@@ -274,6 +275,7 @@ foreach ($myJadual as $key => $myTable)
 }// tamat ulang table
 //------------------------------------------------------------------------------
 //echo '<pre>$lepas->'; print_r($lepas) . '</pre>';
+$lepas = null;
 //style="position: relative; top: -12px; left: 80px;" ?>
 </fieldset>
 <div align="center"><form method="GET" action="">
