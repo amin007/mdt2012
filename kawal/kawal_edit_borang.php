@@ -92,7 +92,7 @@ $(function() {
 <table class="excel" border="0">
 <?php
 	
-	// lepas
+	/*
 	if (is_array($lepas))
 	{
 		$thnlepas = "\n<tr bgcolor='#e6e6fa'>";#LAVENDAR
@@ -103,7 +103,7 @@ $(function() {
 		$thnlepas .= "\n</tr>";
 
 		echo $thnlepas;
-	}
+	}*/
 	// semasa
 	$U='-<font size=5>' . $utama . '</font>';
 	$brg='#ffffff';
@@ -126,7 +126,7 @@ $(function() {
 		$medan='concat(substring(newss,1,3),\' \',substring(newss,4,3),\' \',' .
 		'substring(newss,7,3),\' \',substring(newss,10,3))' . ' as sidap,' . "\r" .
 		'nama,msic08,terima,hasil,dptLain,web,' .
-		'stok,staf,gaji,sebab,outlet,\'' . $bln . '\'';
+		'stok,staf,gaji,sebab,outlet,\'' . $bln . '\',\'' . ($kunci) . '\'';
 
 		$sql2[]='SELECT ' . $medan . "\r" . 'FROM ' . $bulan . 
 		' WHERE newss="' . $noID . '" ';
@@ -139,154 +139,157 @@ $(function() {
 		$rows   = mysql_num_rows($result);
 
 # papar output - mula
-// nak papar bil. brg
-if ($rows=='0' or $_GET['cari']==null or $noID==null): 
-	echo '<tr><td valign="top" colspan="' . (count($r)+1) . '">' .
-	'<span style="background-color: black; color:yellow">
-	Maaflah, ' . $noID . ' tak jumpalah pada jadual ' .
-	$kira . '->' . $bln . '->' . $bulan . '
-	<font face=Wingdings size=5>L</font></span></td></tr>';
+	// nak papar bil. brg
+	if ($rows=='0' or $_GET['cari']==null or $noID==null): 
+		echo '<tr><td valign="top" colspan="' . (count($r)+1) . '">' .
+		'<span style="background-color: black; color:yellow">
+		Maaflah, ' . $noID . ' tak jumpalah pada jadual ' .
+		$kira . '->' . $bln . '->' . $bulan . '
+		<font face=Wingdings size=5>L</font></span></td></tr>';
 
-else: // kalau jumpa
-	//echo '<tr><td colspan='.(count($r)+1).'>'.$kira.'->'.$bln.'->'.$bulan.'</td></tr>'."\r";
-	
-    while($row = mysql_fetch_array($result,MYSQL_NUM)) 
-    {// mula papar result
-	## baris input #####################################################################
-		$bln=$row[12];
-		$bulan='mdt_' . $bln . '12';
-		$kira++;
+	else: // kalau jumpa
+		//echo '<tr><td colspan='.(count($r)+1).'>'.$kira.'->'.$bln.'->'.$bulan.'</td></tr>'."\r";
 		
-		$syarikat=$row[1];// nama syarikat
-		$link='target="_blank" href="./cetak-kes.php?cari='.$noID.'&bln='.($kira).'"';
-		$link2='target="_blank" href="../../mdt2011/kawal/kawal_edit.php?cari='.$noID.'"';
-		
-		echo "<tr>\n<td align=center bgcolor='$brg'>$kawan-" . 
-		$row[0] . "$U</td>\n";
-		//echo "<tr>\n<td align=center>".$kira.'->'.$bln.'->'.$bulan."</td>\n";
-		
-		for ( $f = 2 ; $f < $fields ; $f++ )	
-		{ 	
-			$medanB=mysql_field_name($result,$f);
-			// istihar nama
-			$namainput=" type='text' name='".$bulan."[$medanB]' ".
-					   "value='".$row[$f]."' id='$bulan-$medanB'";
-			$namainput2=" type='text' name='".$bulan."[$medanB]' ".
-					   "value='".$row[$f]."' ";
-			$namainput3=" name='".$bulan."[$medanB]' rows='1' cols='18' ";
-			// semak nama medan		   
-			switch ($f) 
-			{// mula - semak nama medan
-			case 2:// msic
-				$input='<input'.$namainput2.' size=2 maxlength=5 '.
-				'style="font-family:sans-serif;font-size:10px;">';
-				break;
-			case 3:// tarikh terima
-				$input='<input'.$namainput2.' id="'.$bulan.'" size=7 readonly '.
-				'style="font-family:sans-serif;font-size:9px;">';
-				break;
-			case 4:// jualan
-				$jual[$kira]=$row[4]; $lain[$kira]=$row[5];
-				@$hasil=$jual[$kira]+$lain[$kira];// kira hasil
-				$input='<input'.$namainput.' size=8>';
-				break;
-			case 8:case 9:// 8-staf & 9-gaji
-				$staf[$kira]=$row[8]; $gaji[$kira]=$row[9];
-				$input='<input'.$namainput.' size=5>';
-				break;
-			case 10://sebab
-				$input='<textarea'.$namainput3.'>'.$row[$f].'</textarea>';
-				break;
-			case 12://nota
-				@$sumbang=($jual[$kira]+$lain[$kira])/$staf[$kira];// kira sumbang
-				@$hari=($jual[$kira]+$lain[$kira])/30;// kira sehari
-				$input='sbg:'.kira($sumbang).'<br>hari:'.kira($hari);
-				break;
-			default:
-				$input='<input'.$namainput.' size=5>';
-				break;
-			}// tamat - semak nama medan
+		while($row = mysql_fetch_array($result,MYSQL_NUM)) 
+		{// mula papar result
+		## baris input #####################################################################
+			$bln = $row[12];// nama bulan
+			$kira = $row[13]+1; // bulan dalam nombor
+			$bulan='mdt_' . $bln . '12';
 			
-			//'<td>'.($kira+1).')<a '.$link.'>'.$bln.'</a></td>';
-			 echo ($f==4) ?
-				"\n".'<td bgcolor="' . $brg . '">' . ($kira) .
-				')<a ' . $link . '>' . $row[12] . '</a>' .
-				'<br><a ' . $link2 . '>lepas</a>' .
-				'</td>' . "\n" . '<td align=right>'.$input.'</td>'
-				:( ($f==$fields-1) ?
-					"\n" . '<td align=right bgcolor="' . $brg . '">' . $input . '</td>' 
-					:"\n" . '<td align=right>' . $input . '</td>'
-				);
-		}
-		echo "\n".'</tr>';
-	## baris input #####################################################################
-	## baris papar #####################################################################
-		$key++;
 			
-		echo "<tr bgcolor='bisque'>\n";
-		for ($f=1; $f < 4 ;$f++)
-		{	
-			echo //($f==1)? "<tr>\n<td align=center>".$key.'->'.$bln.'->'.$bulan."</td>\n":
-			"\n<td align=center>".$row[$f].'</td>';	
-		}
-		for ($f=4; $f < 10 ;$f++)
-		{// kira jual
-			if ($f==4)
-			{
-				$dulu=$jual[$key-1]; $kini=($row[4]);
-				$papar=@kira($row[4]).'|'.kira2($dulu,$kini).'%';
-			}
-		// kira lain
-			elseif ($f==5)
-			{
-				$dulu=$lain[$key-1]; $kini=($row[5]);
-				$papar=@kira($row[5]).'|'.kira2($dulu,$kini).'%';
-			}
-		// kira staf
-			elseif ($f==8)
-			{
-				$dulu=$staf[$key-1]; $kini=($row[8]);
-				$papar=@kira($row[8]).'|'.kira2($dulu,$kini).'%';
-			}
-		// kira gaji
-			elseif ($f==9)
-			{
-				$dulu=$gaji[$key-1]; $kini=($row[9]);
-				$papar=@kira($row[9]).'|'.kira2($dulu,$kini).'%';
-			}
-		// kira lain2 data
-			else {$papar=@kira($row[$f]);}
-		// semak dah kira, baru papar
-			$Dahulu=($jual[$key-1]+$lain[$key-1]);
-			$Kemudian=($row[4]+$row[5]);
-			$beza=kira2($Dahulu,$Kemudian); // ada koma
-			$beza3=kira3($Dahulu,$Kemudian);// takde koma
-			$sebab=($beza3 <= 30 && $beza3 >= -30)?
-			$syarikat: $syarikat . (
-				($beza3 > 0) ? ' naik ' :' turun '
-			) . $beza3 . '%';
-			$link3='target="_blank" href="../forum/sms.php?kawan=' . $kawan .
-			//'&cari=' . urlencode($sebab) . '"';
-			'&cari=' . ($sebab) . '"';
-			$banding='<a ' . $link3 . '>' .
-			(
-				($beza <= 30 && $beza >= -30)? $beza
-				:'<font size=4>' .$beza . '</font>'
-			) . '%</a>';
+			$syarikat=$row[1];// nama syarikat
+			$link='target="_blank" href="./cetak-kes.php?cari='.$noID.'&bln='.($kira).'"';
+			$link2='target="_blank" href="../../mdt2011/kawal/kawal_edit.php?cari='.$noID.'"';
 			
-			echo "\n".($f==4?'<td>'.$banding.'</td>'."\r":'').
-			'<td align=right>'.($papar==0?'':$papar).'</td>';
-		//kira purata
-		@$purata=kira(($row[9]/$row[8]));// gaji/staf
-		}
-		echo "\n<td>" . $row[10] . '</td>'.
-		"\n<td align=right>" . $row[11] . '</td>'.
-		"\n<td align=right>1gaji=" . $purata . '</td>'.
-        "\n</tr>";
-	## baris papar #####################################################################
-	}// tutup papar result
-endif; //tamat jika jumpa
+			echo "<tr>\n<td align=center bgcolor='$brg'>$kawan-" . $row[0] . "$U</td>\n";
+			//echo "<tr>\n<td align=center>".$kira.'->'.$bln.'->'.$bulan."</td>\n";
+			
+			for ( $f = 2 ; $f < $fields-1 ; $f++ )	
+			{ 	
+				$medanB=mysql_field_name($result,$f);
+				// istihar nama
+				$namainput=" type='text' name='".$bulan."[$medanB]' ".
+						   "value='".$row[$f]."' id='$bulan-$medanB'";
+				$namainput2=" type='text' name='".$bulan."[$medanB]' ".
+						   "value='".$row[$f]."' ";
+				$namainput3=" name='".$bulan."[$medanB]' rows='1' cols='18' ";
+				// semak nama medan		   
+				switch ($f) 
+				{// mula - semak nama medan
+				case 2:// msic
+					$input='<input'.$namainput2.' size=2 maxlength=5 '.
+					'style="font-family:sans-serif;font-size:10px;">';
+					break;
+				case 3:// tarikh terima
+					$input='<input'.$namainput2.' id="'.$bulan.'" size=7 readonly '.
+					'style="font-family:sans-serif;font-size:9px;">';
+					break;
+				case 4:// jualan
+					$jual[$kira]=$row[4]; $lain[$kira]=$row[5];
+					@$hasil=$jual[$kira]+$lain[$kira];// kira hasil
+					$input='<input'.$namainput.' size=8>';
+					break;
+				case 8:case 9:// 8-staf & 9-gaji
+					$staf[$kira]=$row[8]; $gaji[$kira]=$row[9];
+					$input='<input'.$namainput.' size=5>';
+					break;
+				case 10://sebab
+					$input='<textarea'.$namainput3.'>'.$row[$f].'</textarea>';
+					break;
+				case 12://nota
+					@$sumbang=($jual[$kira]+$lain[$kira])/$staf[$kira];// kira sumbang
+					@$hari=($jual[$kira]+$lain[$kira])/30;// kira sehari
+					$input='sbg:'.kira($sumbang).'<br>hari:'.kira($hari);
+					break;
+				case 13:// kira
+					$input = null;
+				default:
+					$input='<input'.$namainput.' size=5>';
+					break;
+				}// tamat - semak nama medan
+				
+				//'<td>'.($kira+1).')<a '.$link.'>'.$bln.'</a></td>';
+				 echo ($f==4) ?
+					"\n".'<td bgcolor="' . $brg . '">' . ($kira) .
+					')<a ' . $link . '>' . $row[12] . '</a>' .
+					'<br><a ' . $link2 . '>lepas</a>' .
+					'</td>' . "\n" . '<td align=right>'.$input.'</td>'
+					:( ($f==$fields-1) ?
+						"\n" . '<td align=right bgcolor="' . $brg . '">' . $input . '</td>' 
+						:"\n" . '<td align=right>' . $input . '</td>'
+					);
+			}
+			echo "\n".'</tr>';
+		## baris input #####################################################################
+		## baris papar #####################################################################
+			$key=$row[13]+2;
+				
+			echo "<tr bgcolor='bisque'>\n";
+			for ($f=1; $f < 4 ;$f++)
+			{	
+				echo //($f==1)? "<tr>\n<td align=center>".$key.'->'.$bln.'->'.$bulan."</td>\n":
+				"\n<td align=center>".$row[$f].'</td>';	
+			}
+			for ($f=4; $f < 10 ;$f++)
+			{// kira jual
+				if ($f==4)
+				{
+					$dulu=$jual[$key-1]; $kini=($row[4]);
+					$papar=@kira($row[4]).'|'.kira2($dulu,$kini).'%';
+				}
+			// kira lain
+				elseif ($f==5)
+				{
+					$dulu=$lain[$key-1]; $kini=($row[5]);
+					$papar=@kira($row[5]).'|'.kira2($dulu,$kini).'%';
+				}
+			// kira staf
+				elseif ($f==8)
+				{
+					$dulu=$staf[$key-1]; $kini=($row[8]);
+					$papar=@kira($row[8]).'|'.kira2($dulu,$kini).'%';
+				}
+			// kira gaji
+				elseif ($f==9)
+				{
+					$dulu=$gaji[$key-1]; $kini=($row[9]);
+					$papar=@kira($row[9]).'|'.kira2($dulu,$kini).'%';
+				}
+			// kira lain2 data
+				else {$papar=@kira($row[$f]);}
+			// semak dah kira, baru papar
+				$Dahulu=($jual[$key-1]+$lain[$key-1]);
+				$Kemudian=($row[4]+$row[5]);
+				$beza=kira2($Dahulu,$Kemudian); // ada koma
+				$beza3=kira3($Dahulu,$Kemudian);// takde koma
+				$sebab=($beza3 <= 30 && $beza3 >= -30)?
+				$syarikat: $syarikat . (
+					($beza3 > 0) ? ' naik ' :' turun '
+				) . $beza3 . '%';
+				$link3='target="_blank" href="../forum/sms.php?kawan=' . $kawan .
+				//'&cari=' . urlencode($sebab) . '"';
+				'&cari=' . ($sebab) . '"';
+				$banding='<a ' . $link3 . '>' .
+				(
+					($beza <= 30 && $beza >= -30)? $beza
+					:'<font size=4>' .$beza . '</font>'
+				) . '%</a>';
+				
+				echo "\n".($f==4?'<td>'.$banding.'</td>'."\r":'').
+				'<td align=right>'.($papar==0?'':$papar).'</td>';
+			//kira purata
+			@$purata=kira(($row[9]/$row[8]));// gaji/staf
+			}
+			echo "\n<td>" . $row[10] . '</td>'.
+			"\n<td align=right>" . $row[11] . '</td>'.
+			"\n<td align=right>1gaji=" . $purata . '</td>'.
+			"\n</tr>";
+		## baris papar #####################################################################
+		}// tutup papar result
+	endif; //tamat jika jumpa
 # papar output - tamat
+
 ?>
 <tr><td valign="top" bgcolor="<?php echo $brg?>">
 	<a name="bulan"></a>
@@ -301,7 +304,7 @@ echo "\t".'<input type="hidden" name="pc" value="'.$pc."\">\n";
 	<input type="hidden" name="syarikat" value="<?=$syarikat?>">
 	<input type="hidden" name="kawan" value="<?=$kawan?>">
 	<input type="hidden" name="telkawan" value="<?=$telkawan?>">
-	<font size="5" color="red"><?=$_GET['ralat']?>&rarr;</font>
+	<font size="5" color="red"><?=( !isset($_GET['ralat']) ? '':$_GET['ralat'] )?>&rarr;</font>
 	<input type="submit" value="Proses" name="semua" id="semua">
 </td><td valign="top" colspan="<?php echo (count($r)); ?>">
 	<label class="papan">
