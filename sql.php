@@ -395,7 +395,7 @@ case "SemakRespon":
 	$sql="SELECT $m FROM \r mdt_$myTable b, mdt_rangka as c
 	WHERE (b.newss=c.newss and c.respon is null) ";
 	$sql.=$_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and c.fe='".$fe."' ");
 	$sql.="\rAND c.fe<>'batal'\r".'ORDER BY b.msic08 ';
 	//echo $p1.$sql.$p2;
 	break;
@@ -409,7 +409,7 @@ case "SemakResponTarikh":
 	WHERE (b.newss=c.newss ".
 	" and c.respon is null and b.terima like '20%') ";
 	$sql.=$_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and c.fe='".$fe."' ");
 	$sql.="\rAND c.fe<>'batal'\r".'ORDER BY b.msic08 ';
 	//echo $p1.$sql.$p2;
 	break;
@@ -422,7 +422,7 @@ case "SemakHasil":
 	$sql="SELECT $m FROM \r mdt_$myTable b, mdt_rangka as c
 	WHERE (b.newss=c.newss and b.hasil is not null and b.terima is null) ";
 	$sql.=$_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and c.fe='".$fe."' ");
 	$sql.="\rAND c.fe<>'batal'\r".'ORDER BY b.msic08 ';
 	//echo $p1.$sql.$p2;
 	break;
@@ -435,7 +435,7 @@ case "SemakHasilTarikh":
 	$sql="SELECT $m FROM \r mdt_$myTable b, mdt_rangka as c
 	WHERE (b.newss=c.newss and b.hasil is null and b.terima is not null) ";
 	$sql.=$_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and c.fe='".$fe."' ");
 	$sql.="\rAND c.fe<>'batal'\r".'ORDER BY b.msic08 ';
 	//echo $p1.$sql.$p2;
 	break;
@@ -449,7 +449,7 @@ case "SemakMsic08":
 	WHERE (b.newss=c.newss ".
 	" and b.msic08 is null and terima like '20%') ";
 	$sql.=$_SESSION['level']=='fe' ? "and c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and c.fe='".$fe."' ");
 	$sql.="\rAND c.fe<>'batal'\r".'ORDER BY b.msic08 ';
 	//echo $p1.$sql.$p2;
 	break;
@@ -497,7 +497,7 @@ case "SemakPBBU":
 	"(dtsample s LEFT JOIN mdt_rangka c\r".
 	"on c.newss=s.newss) WHERE c.fe<>'batal' ";
 	$sql.=$_SESSION['level']=='fe' ? "\rand c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "\rand c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "\rand c.fe='".$fe."' ");
 	$sql.="\rand s.UTAMA='KES UTAMA' ";
 	$sql.=" ORDER BY c.fe desc ";
 	//echo $p1.$sql.$p2;
@@ -517,7 +517,7 @@ case "SemakPSBU":
 	"(dtsample s LEFT JOIN mdt_rangka c\r".
 	"on c.newss=s.newss) WHERE c.fe<>'batal' ";
 	$sql.=$_SESSION['level']=='fe' ? "\rand c.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "\rand c.fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "\rand c.fe='".$fe."' ");
 	$sql.="\rand s.UTAMA='BUKAN KES UTAMA' ";
 	$sql.=" ORDER BY c.fe desc ";
 	//echo $p1.$sql.$p2;
@@ -530,7 +530,7 @@ case "SemakM":
 	$sql="SELECT $r FROM `mdt_".$myTable."` ";
 	$sql.='WHERE batch is null ';
 	$sql.=$_SESSION['level']=='fe' ? "and fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and fe='".$fe."' ");
 	$sql.="\r ORDER BY nama ";
 	//echo $p1.$sql.$p2;
 	break;	
@@ -543,7 +543,7 @@ case "SemakAlamat":
 	$sql="SELECT $r FROM `mdt_".$myTable."` ";
 	$sql.='WHERE masalah="ya" ';
 	$sql.=$_SESSION['level']=='fe' ? "and fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': "and fe='".$_GET['fe']."' ");
+	:(($fe==null) ? '': "and fe='".$fe."' ");
 	$sql.="\r ORDER BY nama ";
 	//echo $p1.$sql.$p2;
 	break;	
