@@ -58,6 +58,7 @@ function jadual_bulanan()
 }
 function lihat($tab,$kini,$papar,$pegawai) 
 {	
+	$selit = null;
 	$p=($papar==null)? '':'&p='.$papar;
 	$item=($_GET['item']==null)? '&item=30':'&item='.$_GET['item'];
 	$i=1;foreach ($pegawai as $value) 
@@ -68,6 +69,7 @@ function lihat($tab,$kini,$papar,$pegawai)
 }
 function lihat1($tab,$kini,$papar,$pegawai) 
 {	
+	$selit = null;
 	$p=($papar==null)? '':'&p='.$papar;
 	$item=($_GET['item']==null)? '&item=30':'&item='.$_GET['item'];
 	$i=1;foreach ($pegawai as $value) 
@@ -78,6 +80,7 @@ function lihat1($tab,$kini,$papar,$pegawai)
 }
 function lihat2($kini,$papar,$pegawai,$item) 
 {	
+	$selit = null;
 	$i=1;foreach ($pegawai as $value) 
 	{$selit.="\t\t<li><a href='./?$kini&p=$papar".
 	"&fe=$value&item=$item&susun=1'>".
@@ -86,6 +89,7 @@ function lihat2($kini,$papar,$pegawai,$item)
 }
 function lihatUtama($tab,$kini,$papar,$pegawai) 
 {	
+	$selit = null;
 	$p=($papar==null)? '':'&p='.$papar;
 	$A1=($papar==null)? '':'&p='.$papar.'_A1';
 	$XA1=($papar==null)? '':'&p='.$papar.'_XA1';
