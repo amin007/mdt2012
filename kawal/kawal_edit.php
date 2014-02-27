@@ -172,7 +172,7 @@ include '../excel.txt';
 include '../autocomplete.txt';
 ?>
 </head>
-<body background="../../../bg/bg/<?php //include '../gambar2.php';?>">
+<body background="../../../bg/bg/<?php include '../gambar2.php';?>">
 <div id="content">
 <fieldset><legend>
 <span style="background-color: black; color:yellow">
