@@ -123,22 +123,6 @@ case "BBU_XA1": case "SBU_XA1":
 	$sql.=" \r\tAND c.fe<>'batal' \r\tORDER BY ".$_GET['susun']." ";
 	//echo $p1.$sql.$p2;
 	break;
-/*
-	case "SBU_XA1":
-	$msic='if(B.msic08 is null,C.msic,B.msic08)';
-	$r="B.newss,concat(B.nama,'<br>',B.sidap) as nama,$msic msic08,\r".
-	"B.status U,C.fe,tel,responden,B.terima,\r".
-	"format(b.hasil,0) as hasil,format(b.dptlain,0) as dptlain,\r".
-	"format(b.stok,0) as stok,b.staf,format(b.gaji,0) as gaji, ".
-	"b.outlet,b.sebab ";
-	$sql="SELECT $r FROM mdt_$myTable as b LEFT JOIN `mdt_rangka` C\r".
-	"on B.newss=C.newss WHERE B.status='SBU' and B.terima is null";
-	$sql.=$_SESSION['level']=='fe' ? " and C.fe='".$_SESSION['user']."' "
-	:(($_GET['fe']==null) ? '': " and C.fe='".$_GET['fe']."' ");
-	$sql.="\rAND C.fe<>'batal'\r ORDER BY nama ";
-	//echo $p1.$sql.$p2;
-	break;
-*/
 case "BBU_TEGAR": case "SBU_TEGAR":
 	$utama=substr($_GET['p'],0,3);
 	$msic='if(b.msic08 is null,c.msic,b.msic08)';
