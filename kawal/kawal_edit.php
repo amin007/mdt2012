@@ -122,7 +122,7 @@ function kira3($dulu,$kini)
 	return @number_format((($kini-$dulu)/$dulu)*100,0,'.','');
 }
 //@$kiraan=(($kini-$dulu)/$dulu)*100;
-function diehard4($bil,$sql) 
+function diehard4($bil,$sql)
 {
 	$w0=' style="background-color: #fffaf0; color:black" ';
 	$w1='<span style="background-color: #fffaf0; color:black">';$w2='</span>';
