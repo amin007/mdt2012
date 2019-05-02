@@ -92,8 +92,8 @@ function cariMedanInput($ubah,$f,$row,$nama)
 	9-`id U M`,10-nama,11-sidap,12-status
 	*/// papar medan yang terlibat
 	$cariMedan=array(0,1,2,3,4,5);
-	$cariText=array(0);// papar jika nota ada
-	$cariMsic=array(8); //papar input text msic sahaja 
+	$cariText=array(0);//papar jika nota ada
+	$cariMsic=array(8);//papar input text msic sahaja 
 	$medanR=$ubah.'['.$nama.']';
 		
 	// tentukan medan yang ada input
@@ -106,7 +106,6 @@ function cariMedanInput($ubah,$f,$row,$nama)
 	):'<label class="papan">'.$row[$f].'</label>';
 	
 	return $input;
-
 }//function cariMedanInput($f,$nama,$input)  - tamat
 function kira($kiraan)
 {
